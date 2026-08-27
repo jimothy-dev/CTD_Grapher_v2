@@ -1,0 +1,12 @@
+# Colab / Jupyter
+.ipynb_checkpoints/
+__pycache__/
+
+# generated plots
+CTD_output/
+*.html
+*.png
+
+# local CTD data
+CTD Files/
+CTD_files/
