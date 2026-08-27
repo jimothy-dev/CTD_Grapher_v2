@@ -9,8 +9,10 @@ The user adds their `.cnv` files and runs one cell. No Excel import, no Google D
 ## How to use
 
 1. Run **Setup** once per session.
-2. Run **Plot** and pick your `.cnv` files with the upload button.
-3. Use the **Top (m)** / **Bottom (m)** boxes above the graphs to focus on part of the water column — type `20` into Bottom to look at the top 20 m.
+2. Run **1 · Load** and pick your `.cnv` files with the upload button.
+3. Run **2 · Plot**.
+
+To focus on part of the water column, type a depth into the `bottom_m` field beside the Plot cell and run it again — the graphs redraw and the x axis rescales to the values inside that window. Loading is a separate cell so changing the depth window never re-prompts for uploads.
 
 Filenames become legend labels, with underscores turned into spaces:
 
@@ -61,6 +63,10 @@ Things that bite when parsing `.cnv`, all handled here:
 - **`bad_flag = -9.990e-29`** marks missing data and becomes `NaN`. The comparison has to be purely relative (`atol=0`), or every near-zero reading gets wiped out.
 - **`loopedit` in the header** means the upcast has already been removed. Files without it may still contain it, and the notebook prints a warning so the profile doubling back on itself is not a mystery.
 
+## Colab rendering constraint
+
+Plots are emitted with a plain `fig.show()` and nothing clears the cell. This is deliberate. Colab's plotly renderer attaches a `MutationObserver` that calls `Plotly.purge()` when a figure's output element is rebuilt, so `clear_output()` destroys the figures as they arrive — the notebook looks like it ran fine and shows nothing. An ipywidgets `Output()` is no help either: `fig.show()`, `display(fig)` and `append_display_data()` all come back empty or with no payload inside one. Re-running the Plot cell is the reliable way to redraw.
+
 ## Differences from [CTD_Grapher](https://github.com/jimothy-dev/CTD_Grapher)
 
 | v1 | v2 |
@@ -69,4 +75,4 @@ Things that bite when parsing `.cnv`, all handled here:
 | Hardcoded parse-start row per lab | `*END*` detected per file |
 | User picks UW-T or FHL | Sensors auto-detected from header |
 | Static PDF to Google Drive | Interactive HTML + PNG, no Drive |
-| Fixed depth range | Depth window typed in and applied live |
+| Fixed depth range | Depth window typed in, re-run to apply |
