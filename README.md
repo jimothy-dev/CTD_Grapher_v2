@@ -12,6 +12,8 @@ The user adds their `.cnv` files and runs one cell. No Excel import, no Google D
 2. Run **1 · Load** and pick your `.cnv` files with the upload button.
 3. Run **2 · Plot**.
 
+The three code cells are Colab form cells (`cellView: form`), so they open as a title bar and a run button with the code hidden — double-click a cell or use View → Show/hide code to edit it.
+
 To focus on part of the water column, type a depth into the `bottom_m` field beside the Plot cell and run it again — the graphs redraw and the x axis rescales to the values inside that window. Loading is a separate cell so changing the depth window never re-prompts for uploads.
 
 Filenames become legend labels, with underscores turned into spaces:
