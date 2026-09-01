@@ -46,6 +46,7 @@ Temperature · Salinity · Density (sigma-t) · Dissolved Oxygen (mL/L) · Fluor
 Written to `/content/CTD_output/` and refreshed on every update:
 
 - **`CTD_profiles.html`** — every graph in one file, ~30 KB, loading `plotly.js` from a CDN. This is the one to share: it opens instantly, emails without tripping attachment limits, and uploads to a static host in a second. Needs a connection to render.
+- **`single_graphs/*.html`** — one file per variable (`Temperature.html`, `Salinity.html`, …), ~15 KB each, no page heading so they embed cleanly in someone else's layout. For sharing or iframing a single graph without editing HTML.
 - **`CTD_profiles_offline.html`** — the same graphs with `plotly.js` inlined, several MB, no connection required. For presenting without wifi.
 - **`png/*.png`** — 3× scale static copies for slides and print.
 
