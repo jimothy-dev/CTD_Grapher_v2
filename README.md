@@ -45,18 +45,23 @@ Temperature · Salinity · Density (sigma-t) · Dissolved Oxygen (mL/L) · Fluor
 
 Written to `/content/CTD_output/` and refreshed on every update:
 
-- **`CTD_profiles.html`** — every graph in one self-contained file. `plotly.js` is inlined, so it is ~4 MB but works offline on any machine with no install. Hyperlink a slide to it and it opens interactive during a presentation.
+- **`CTD_profiles.html`** — every graph in one file, ~30 KB, loading `plotly.js` from a CDN. This is the one to share: it opens instantly, emails without tripping attachment limits, and uploads to a static host in a second. Needs a connection to render.
+- **`CTD_profiles_offline.html`** — the same graphs with `plotly.js` inlined, several MB, no connection required. For presenting without wifi.
 - **`png/*.png`** — 3× scale static copies for slides and print.
+
+Inlining used to be the only output. It was the wrong default: a multi-MB file with a single 3.5 MB `<script>` block is slow to open and easy to truncate in transit, and a truncated one renders the page heading and nothing else.
 
 ### Getting a graph into a document or site
 
 The notebook's intro cell carries this in plain language for non-technical users. In short:
 
+Two answers cover nearly everything: **PNG for documents, send the HTML file for interaction.** Hosting is an advanced case, not the default.
+
 | Where | What works |
 |---|---|
-| Google Doc / Word / slideshow | The PNG. Interactive charts cannot be embedded in Docs or Slides — no add-on changes this. Link to the HTML underneath. |
-| Emailing someone | Send `CTD_profiles.html`. They double-click it; it opens in any browser, offline, nothing to install. |
-| Getting a web link | Drag the HTML onto [app.netlify.com/drop](https://app.netlify.com/drop) — free, no account, no code. Google Drive will not serve it; it downloads instead. |
+| Google Doc / Word / slideshow | The PNG. Interactive charts cannot be embedded in Docs or Slides — no add-on changes this. |
+| Letting someone explore it | Send `CTD_profiles.html`. They double-click it; it opens in any browser, nothing to install. |
+| A public web link | Drag the HTML onto [app.netlify.com/drop](https://app.netlify.com/drop) — free, no account, no code. Google Drive will not serve it; it downloads instead. |
 | Google Sites | Insert → Embed → By URL, using that link. Stays interactive in the page. |
 | PowerPoint | Hyperlink a picture to the `.html` beside the deck, or use the Web Viewer add-in with a hosted URL. |
 | A managed website | Hand over the HTML and ask for an iframe. |
