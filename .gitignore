@@ -2,11 +2,10 @@
 .ipynb_checkpoints/
 __pycache__/
 
-# generated plots
+# generated output
 CTD_output/
 *.html
 *.png
 
-# local CTD data
-CTD Files/
-CTD_files/
+# ...except the committed example the README links to
+!examples/*.html
