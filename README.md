@@ -16,6 +16,8 @@ The three code cells are Colab form cells (`cellView: form`), so they open as a 
 
 To focus on part of the water column, fill in `depth_from_m` and `depth_to_m` beside the Plot cell and run it again — the graphs redraw and the x axis rescales to the values inside that window. Loading is a separate cell so changing the depth window never re-prompts for uploads.
 
+**Uploaded the wrong file?** Run the Load cell again and re-upload. Colab never overwrites — a second upload of `Station_1.cnv` lands as `Station_1 (1).cnv` — so the notebook strips the ` (n)`, keeps only the highest-numbered (newest) copy of each station, and prints which files it ignored. Sorting is done on the cleaned station name, so a suffix cannot reorder stations or shift their colours.
+
 **Titles** come from the survey location: `Quartermaster Harbor: Depth vs Temperature`. Leave the location blank and you get `Depth vs Temperature`.
 
 **Colours are locked to station order** — the first station in the canonical order is always `PALETTE[0]`, the second always `PALETTE[1]`, and so on, independent of which variable is being drawn or how many stations there are. The Load cell prints the colour key so a bar chart, map, or any other figure of the same stations can use identical colours. Past 10 stations the palette repeats and the line style steps to dashed, so any `n` stays distinguishable.
