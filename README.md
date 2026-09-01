@@ -53,13 +53,11 @@ Written to `/content/CTD_output/`:
 
 ### Example output
 
-[`examples/Temperature.html`](examples/Temperature.html) is a real depth vs temperature graph produced from `example_data/`.
+**[▶ Depth vs Temperature — live interactive graph](https://jimothy-dev.github.io/CTD_Grapher_v2/examples/Temperature.html)**
 
-GitHub renders README files without JavaScript, so an interactive chart cannot be embedded directly on this page — no markdown or HTML trick gets around it. To see it live, either download the file and open it, or turn on GitHub Pages for this repo (**Settings → Pages → Deploy from a branch → `main` / root**), after which it is served at:
+Produced from `example_data/`. Hover for values, zoom, click a station in the legend to hide it.
 
-```
-https://jimothy-dev.github.io/CTD_Grapher_v2/examples/Temperature.html
-```
+GitHub renders README files without JavaScript, so the chart cannot be drawn on this page itself — the link above opens the real thing.
 
 ## Sharing a graph
 
@@ -75,7 +73,7 @@ Columns and the data offset are read from each file's own header, so header leng
 
 Recognised channels are graphed automatically; anything else in a file is offered as a tick box, so nothing is out of reach.
 
-One caveat: raw casts that have not been through Sea-Bird's `loopedit` still contain the upcast, so profiles double back on themselves. The notebook warns when a file's header shows no `loopedit`.
+Raw casts that have not been through Sea-Bird's loop edit still contain the upcast, so profiles double back on themselves. The Load cell detects this from the header and cleans it up — cut at the deepest reading, then keep only readings deeper than everything before them, leaving the monotonic downcast. It is an approximation of Sea-Bird's loop edit, which works from scan-rate pressure and a descent-velocity threshold that a file alone may not provide, so files already loop edited are left untouched. Untick **clean_raw_casts** to see the profiles as recorded.
 
 ## Credit
 
