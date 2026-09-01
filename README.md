@@ -9,7 +9,7 @@ Upload your `.cnv` files and run one cell. No Excel import, no Google Drive, not
 ## How to use
 
 1. Run **Setup** once per session.
-2. Run **1 · Survey location and files** — type the survey area, then pick your `.cnv` files when the upload button appears.
+2. Run **1 · Survey location and files** — type the survey area, pick your `.cnv` files, then tick which variables to graph.
 3. Run **2 · Draw the graphs**.
 
 To focus on part of the water column, fill in `depth_from_m` and `depth_to_m` beside the Plot cell and run it again. Loading is a separate cell, so changing the depth window never re-prompts for uploads.
@@ -56,8 +56,6 @@ Written to `/content/CTD_output/`:
 **[▶ Depth vs Temperature — live interactive graph](https://jimothy-dev.github.io/CTD_Grapher_v2/examples/Temperature.html)**
 
 Produced from `example_data/`. Hover for values, zoom, click a station in the legend to hide it.
-
-GitHub renders README files without JavaScript, so the chart cannot be drawn on this page itself — the link above opens the real thing.
 
 ## Sharing a graph
 
