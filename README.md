@@ -9,12 +9,16 @@ The user adds their `.cnv` files and runs one cell. No Excel import, no Google D
 ## How to use
 
 1. Run **Setup** once per session.
-2. Run **1 · Load** and pick your `.cnv` files with the upload button.
-3. Run **2 · Plot**.
+2. Run **1 · Survey location and files** — type the survey area, then pick your `.cnv` files when the upload button appears.
+3. Run **2 · Draw the graphs**.
 
 The three code cells are Colab form cells (`cellView: form`), so they open as a title bar and a run button with the code hidden — double-click a cell or use View → Show/hide code to edit it.
 
-To focus on part of the water column, type a depth into the `bottom_m` field beside the Plot cell and run it again — the graphs redraw and the x axis rescales to the values inside that window. Loading is a separate cell so changing the depth window never re-prompts for uploads.
+To focus on part of the water column, fill in `depth_from_m` and `depth_to_m` beside the Plot cell and run it again — the graphs redraw and the x axis rescales to the values inside that window. Loading is a separate cell so changing the depth window never re-prompts for uploads.
+
+**Titles** come from the survey location: `Quartermaster Harbor: Depth vs Temperature`. Leave the location blank and you get `Depth vs Temperature`.
+
+**Colours are locked to station order** — the first station in the canonical order is always `PALETTE[0]`, the second always `PALETTE[1]`, and so on, independent of which variable is being drawn or how many stations there are. The Load cell prints the colour key so a bar chart, map, or any other figure of the same stations can use identical colours. Past 10 stations the palette repeats and the line style steps to dashed, so any `n` stays distinguishable.
 
 Filenames become legend labels, with underscores turned into spaces:
 
@@ -42,7 +46,18 @@ Written to `/content/CTD_output/` and refreshed on every update:
 - **`CTD_profiles.html`** — every graph in one self-contained file. `plotly.js` is inlined, so it is ~4 MB but works offline on any machine with no install. Hyperlink a slide to it and it opens interactive during a presentation.
 - **`png/*.png`** — 3× scale static copies for slides and print.
 
-Google Slides cannot embed HTML at all, and PowerPoint's Web Viewer add-in needs a hosted URL, so a hyperlink to the local HTML is the most reliable way to show the interactive version in a talk.
+### Getting a graph into a document or site
+
+The notebook's intro cell carries this in plain language for non-technical users. In short:
+
+| Where | What works |
+|---|---|
+| Google Doc / Word / slideshow | The PNG. Interactive charts cannot be embedded in Docs or Slides — no add-on changes this. Link to the HTML underneath. |
+| Emailing someone | Send `CTD_profiles.html`. They double-click it; it opens in any browser, offline, nothing to install. |
+| Getting a web link | Drag the HTML onto [app.netlify.com/drop](https://app.netlify.com/drop) — free, no account, no code. Google Drive will not serve it; it downloads instead. |
+| Google Sites | Insert → Embed → By URL, using that link. Stays interactive in the page. |
+| PowerPoint | Hyperlink a picture to the `.html` beside the deck, or use the Web Viewer add-in with a hosted URL. |
+| A managed website | Hand over the HTML and ask for an iframe. |
 
 ## Settings
 
