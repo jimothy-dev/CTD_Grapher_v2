@@ -22,25 +22,17 @@ The `example_data/` folder holds five real casts from Colvos Passage and East Pa
 
 ## What it plots
 
-One graph per variable, every station overlaid, depth inverted on the Y axis, station colours consistent across all graphs.
+One graph per variable, every station overlaid, depth inverted on the Y axis:
 
 Temperature · Salinity · Density (sigma-t) · Dissolved Oxygen · Fluorescence · Beam Transmission · Turbidity · pH · PAR · CDOM
 
-**The sensor set is detected per file.** Only variables actually present get a graph, so casts from different instruments work without changing a setting. Units follow the channel that was found — oxygen appears as mL/L, mg/L, µmol/kg or % saturation depending on what the file recorded. If a file has no depth channel, pressure stands in and the axis says so rather than calling decibars metres.
+Only variables a file actually contains get a graph, with units taken from the channel found — so oxygen may read mL/L, mg/L, µmol/kg or % saturation. Pressure stands in where there is no depth channel, labelled as pressure.
 
-**You choose what gets graphed.** The Load cell lists every channel in your files as a tick box — recognised variables already ticked, everything else offered in case you want it — with an editable axis label beside each. Depth is the Y axis by default; pick something else and the graphs become ordinary scatter plots titled `Salinity vs Temperature`. A tick box beneath the Y selector inverts the axis — on by default, so depth reads downward — and is independent of the depth window, which keeps working either way.
+The Load cell lists every channel as a tick box, recognised ones already ticked, each with an editable axis label. Depth is the Y axis by default; choose another and the graphs become scatter plots titled `Salinity vs Temperature`. A tick box below inverts the axis, on by default.
 
-**Titles** come from the survey location: `Quartermaster Harbor: Depth vs Temperature`.
+Titles come from the survey location: `Quartermaster Harbor: Depth vs Temperature`. Filenames become legend labels — `Station_1.cnv` → **Station 1**, `East_Passage.cnv` → **East Passage** — sorted naturally, so Station 2 precedes Station 10.
 
-**Colours are locked to station order** — the first station is always the same blue, the second the same red, whatever is being plotted. The Load cell prints the colour key so other charts of the same stations can match it. Any number of stations works and every line stays solid.
-
-| File | Legend |
-|---|---|
-| `Station_1.cnv` | Station 1 |
-| `Station_10.cnv` | Station 10 |
-| `East_Passage.cnv` | East Passage |
-
-Stations sort naturally, so Station 2 comes before Station 10.
+Colours are locked to station order and printed as a key, so other charts of the same stations can match them.
 
 ## What you get
 
