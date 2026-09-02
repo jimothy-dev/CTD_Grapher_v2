@@ -70,3 +70,11 @@ If the numbers matter, process the casts properly first — with Sea-Bird's own 
 Example data in `example_data/` collected by students of **TGEOS 445, Estuarine Field Studies, University of Washington Tacoma**, Spring 2026, in Colvos Passage and East Passage, Puget Sound.
 
 Instrument: **Sea-Bird SBE 19plus** (temperature and conductivity SN 7686), processed with Sea-Bird SBEDataProcessing.
+
+## Licence
+
+[GNU General Public License v3.0](LICENSE). Free to use, change and share, including commercially. Anything you distribute that is built on it must stay under the same licence and ship its source.
+
+Copyright (c) 2026 James Simpson
+
+The licence covers the code in this repository. Example data and any course documents remain the property of their authors and are included with credit, not relicensed.
