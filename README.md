@@ -73,8 +73,4 @@ Instrument: **Sea-Bird SBE 19plus** (temperature and conductivity SN 7686), proc
 
 ## Licence
 
-[GNU General Public License v3.0](LICENSE). Free to use, change and share, including commercially. Anything you distribute that is built on it must stay under the same licence and ship its source.
-
-Copyright (c) 2026 James Simpson
-
-The licence covers the code in this repository. Example data and any course documents remain the property of their authors and are included with credit, not relicensed.
+[GPL-3.0](LICENSE). Copyright (c) 2026 James Simpson. Covers the code; example data stays with its authors.
