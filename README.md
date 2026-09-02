@@ -6,6 +6,10 @@ Interactive depth profiles from Sea-Bird CTD `.cnv` files, in one Colab notebook
 
 Upload your `.cnv` files and run one cell. No Excel import, no Google Drive, nothing to configure per instrument.
 
+**[▶ See an example — Depth vs Temperature, live and interactive](https://jimothy-dev.github.io/CTD_Grapher_v2/examples/Temperature.html)**
+
+Five real casts from Colvos Passage and East Passage, Puget Sound. Hover for values, zoom, click a station in the legend to hide it. The same data is in `example_data/` if you want to run it yourself.
+
 ## How to use
 
 1. Run **Setup** once per session.
@@ -15,10 +19,6 @@ Upload your `.cnv` files and run one cell. No Excel import, no Google Drive, not
 To focus on part of the water column, fill in `depth_from_m` and `depth_to_m` beside the Plot cell and run it again. Loading is a separate cell, so changing the depth window never re-prompts for uploads.
 
 Uploaded the wrong file? Run the Load cell again and re-upload. Colab never overwrites — a second upload of `Station_1.cnv` arrives as `Station_1 (1).cnv` — so the notebook strips the ` (n)`, keeps only the newest copy of each station, and prints which files it ignored.
-
-## Try it without your own data
-
-The `example_data/` folder holds five real casts from Colvos Passage and East Passage, Puget Sound. Download them, upload them to the notebook, and you get the full set of graphs.
 
 ## What it plots
 
@@ -42,12 +42,6 @@ Written to `/content/CTD_output/`:
 - **`single_graphs/*.html`** — one file per variable (`Temperature.html`, `Salinity.html`, …), ~10 KB each, no page heading so they drop cleanly into someone else's layout.
 - **`png/*.png`** — 3× scale static copies for slides and print.
 - **`CTD_profiles_offline.html`** — everything inlined, several MB, works with no internet. For presenting without wifi.
-
-### Example output
-
-**[▶ Depth vs Temperature — live interactive graph](https://jimothy-dev.github.io/CTD_Grapher_v2/examples/Temperature.html)**
-
-Produced from `example_data/`. Hover for values, zoom, click a station in the legend to hide it.
 
 ## Sharing a graph
 
