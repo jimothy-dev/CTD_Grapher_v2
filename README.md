@@ -59,19 +59,11 @@ Recognised channels are graphed automatically; anything else in a file is offere
 
 ## Raw casts
 
-Casts that have not been loop edited still contain the upcast, so profiles double back on themselves. The Load cell detects this from the header and, with **downcast_only_raw** ticked, cuts at the deepest reading and keeps only readings deeper than everything before them. Files already loop edited are untouched.
+A cast that has not been processed still contains the upcast, so the profile doubles back on itself. With **downcast_only_raw** ticked, the Load cell keeps the downcast only. Files that were already processed are left alone.
 
-**This is a display fix, not processing.** Sea-Bird's pipeline is roughly
+**That is a display fix, not processing.** It makes the shape readable; it does not correct the values. Sea-Bird's software does several correction steps before salinity is calculated, and this notebook does none of them — it cannot, from a `.cnv` alone. The Load cell says so when a file looks uncorrected.
 
-```
-DatCnv → Filter → AlignCTD → CellTM → LoopEdit → Derive → BinAvg
-```
-
-and loop edit is one step of it. What this notebook does is the pressure-reversal half of loop edit plus a cut at maximum depth; there is no descent-velocity test, because that needs a time channel a `.cnv` may not carry.
-
-More importantly, `Filter`, `AlignCTD` and `CellTM` run *before* `Derive` and change the values rather than the shape — sensor lag and conductivity-cell thermal mass both distort salinity at sharp gradients. They need scan-rate data and instrument constants, and once a file already contains `sal00` those numbers were computed from whatever correction was or wasn't applied. Nothing here can repair that after the fact, so the Load cell warns when a file's header shows no alignment or cell thermal-mass step.
-
-For real processing, run the casts through Sea-Bird's own modules or a wrapper such as [HakaiInstitute/seabird-processing](https://github.com/HakaiInstitute/seabird-processing), then bring the results here to plot.
+If the numbers matter, process the casts properly first — with Sea-Bird's own software or [HakaiInstitute/seabird-processing](https://github.com/HakaiInstitute/seabird-processing) — then plot the results here.
 
 ## Credit
 
