@@ -1,0 +1,11 @@
+Station positions for the example casts, 15 May 2026, from the field sheet.
+GPS in degrees and decimal minutes (ddmm.mmm), then decimal degrees.
+
+Station 11   4719.001 N   12228.383 W   47.316683  -122.473050
+Station 12   4721.366 N   12224.261 W   47.356100  -122.404350
+Station 15   4720.317 N   12232.637 W   47.338617  -122.543950
+Station 16   4723.594 N   12232.233 W   47.393233  -122.537217
+Station 17   4725.900 N   12231.500 W   47.431667  -122.525000
+
+The notebook fills these in by itself when these files are loaded, matched
+on each cast's start time.
