@@ -8,9 +8,6 @@ Colab notebook that turns Sea-Bird `.cnv` CTD casts into interactive multi-stati
 
 This replaces [CTD_Grapher](https://github.com/jimothy-dev/CTD_Grapher) (v1), which needed a manual Excel import and hard-coded column positions for two specific instruments.
 
-![screenshot](docs/screenshot.png)
-<!-- Capture: the combined CTD_profiles.html in a browser with the hover tooltip showing on one station, or a 2x2 grid of png/*.png. -->
-
 ## What it does
 
 - Accepts any number of `.cnv` files through Colab's upload dialog; filenames become legend labels (`Station_1.cnv` → **Station 1**), sorted naturally.
