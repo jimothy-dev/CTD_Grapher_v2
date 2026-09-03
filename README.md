@@ -1,76 +1,57 @@
 # CTD Grapher v2
 
-Interactive depth profiles from Sea-Bird CTD `.cnv` files, in one Colab notebook.
+Colab notebook that turns Sea-Bird `.cnv` CTD casts into interactive multi-station depth profiles — upload the files, run one cell, get HTML and PNG graphs.
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/jimothy-dev/CTD_Grapher_v2/blob/main/CTD_Grapher_v2.ipynb)
 
-Upload your `.cnv` files and run one cell. No Excel import, no Google Drive, nothing to configure per instrument.
+**Live example:** https://jimothy-dev.github.io/CTD_Grapher_v2/examples/Temperature.html — five casts from Colvos Passage and East Passage, Puget Sound. Hover for values, zoom, click a station in the legend to hide it.
 
-**[▶ See an example — Depth vs Temperature, live and interactive](https://jimothy-dev.github.io/CTD_Grapher_v2/examples/Temperature.html)**
+This replaces [CTD_Grapher](https://github.com/jimothy-dev/CTD_Grapher) (v1), which needed a manual Excel import and hard-coded column positions for two specific instruments.
 
-Five real casts from Colvos Passage and East Passage, Puget Sound. Hover for values, zoom, click a station in the legend to hide it. The same data is in `example_data/` if you want to run it yourself.
+![screenshot](docs/screenshot.png)
+<!-- Capture: the combined CTD_profiles.html in a browser with the hover tooltip showing on one station, or a 2x2 grid of png/*.png. -->
 
-## How to use
+## What it does
 
-1. Run **Setup** once per session.
-2. Run **1 · Survey location and files** — type the survey area, pick your `.cnv` files, then tick which variables to graph.
-3. Run **2 · Draw the graphs**.
+- Accepts any number of `.cnv` files through Colab's upload dialog; filenames become legend labels (`Station_1.cnv` → **Station 1**), sorted naturally.
+- Detects which variables each file contains and plots one graph per variable with all stations overlaid, depth inverted on the Y axis.
+- Recognised variables: Temperature, Salinity, Density (sigma-t), Dissolved Oxygen, Fluorescence, Beam Transmission, Turbidity, pH, PAR, CDOM. Every other channel in the file is offered as a tick box.
+- Optional depth window (`depth_from_m` / `depth_to_m`) and a custom Y axis, which turns the output into scatter plots such as `Salinity vs Temperature`.
+- Writes to `/content/CTD_output/`: `CTD_profiles.html` (all graphs, ~30 KB, loads Plotly from CDN), `single_graphs/*.html` (one per variable), `png/*.png` (3x scale), and `CTD_profiles_offline.html` (Plotly inlined, works without internet).
 
-To focus on part of the water column, fill in `depth_from_m` and `depth_to_m` beside the Plot cell and run it again. Loading is a separate cell, so changing the depth window never re-prompts for uploads.
+## How it works
 
-Uploaded the wrong file? Run the Load cell again and re-upload. Colab never overwrites — a second upload of `Station_1.cnv` arrives as `Station_1 (1).cnv` — so the notebook strips the ` (n)`, keeps only the newest copy of each station, and prints which files it ignored.
+- **Parsing.** `parse_cnv()` reads column names from the `# name` lines in the file header and starts data after the `*END*` marker, so header length is never hard-coded. Headers are decoded as latin-1 because Sea-Bird writes cp1252 (the theta in sigma-theta).
+- **Channel mapping.** A `VARIABLES` table maps each canonical variable to the Sea-Bird short names that can carry it, in priority order, with the unit attached to the name — so oxygen may correctly read mL/L, mg/L, µmol/kg or % sat depending on the cast. Depth prefers `depSM`/`depFM`; pressure (`prdM`, `prSM`, `pr`) stands in and is labelled as pressure. Housekeeping channels (`scan`, `flag`, `pumps`, `timeJ`, ...) are never offered.
+- **Raw casts.** `downcast_only()` cuts at the deepest reading and keeps only monotonically deeper samples, so an unprocessed cast that includes the upcast stops doubling back. This is a display fix, not Sea-Bird processing, and the notebook says so.
+- **Upload hygiene.** Colab never overwrites, so a re-upload arrives as `Station_1 (1).cnv`; the loader strips the suffix, keeps the newest copy per station and prints what it ignored.
+- **Plotting.** Plotly `graph_objects` with a fixed station palette (colour is tied to station order and printed as a key so other figures can match). PNGs are exported through `kaleido`.
+- Tested against the five example casts plus thirteen public-archive `.cnv` files from different ships, instruments and decades (3 to 176,000 rows).
 
-## What it plots
+## Run it
 
-One graph per variable, every station overlaid, depth inverted on the Y axis:
+1. Open the notebook in Colab (badge above) and use a standard CPU runtime.
+2. Run **Setup** (installs `kaleido==0.2.1`; `plotly`, `pandas`, `numpy`, `ipywidgets` are preinstalled in Colab).
+3. Run **1 · Survey location and files** — type the survey area, pick the `.cnv` files, tick the variables to graph. Leave `downcast_only_raw` ticked unless the files are already processed.
+4. Run **2 · Draw the graphs**. Change `depth_from_m` / `depth_to_m` and re-run this cell alone to zoom the water column without re-uploading.
+5. Download from the folder icon in the sidebar: `/content/CTD_output/`.
 
-Temperature · Salinity · Density (sigma-t) · Dissolved Oxygen · Fluorescence · Beam Transmission · Turbidity · pH · PAR · CDOM
+To try it without your own data, upload `example_data/Station_11.cnv` ... `Station_17.cnv`.
 
-Only variables a file actually contains get a graph, with units taken from the channel found — so oxygen may read mL/L, mg/L, µmol/kg or % saturation. Pressure stands in where there is no depth channel, labelled as pressure.
+## Data sources
 
-The Load cell lists every channel as a tick box, recognised ones already ticked, each with an editable axis label. Depth is the Y axis by default; choose another and the graphs become scatter plots titled `Salinity vs Temperature`. A tick box below inverts the axis, on by default.
+- `example_data/` — five SBE 19plus casts (temperature/conductivity SN 7686) from Colvos Passage and East Passage, Puget Sound, 15 May 2026, collected by students of TGEOS 445 Estuarine Field Studies, University of Washington Tacoma, processed with Sea-Bird SBEDataProcessing.
+- `examples/Temperature.html` — the committed output served by GitHub Pages.
 
-Titles come from the survey location: `Quartermaster Harbor: Depth vs Temperature`. Filenames become legend labels — `Station_1.cnv` → **Station 1**, `East_Passage.cnv` → **East Passage** — sorted naturally, so Station 2 precedes Station 10.
+## Limitations / next steps
 
-Colours are locked to station order and printed as a key, so other charts of the same stations can match them.
+- No sensor corrections: alignment, cell thermal mass, loop edit and derived salinity are Sea-Bird processing steps that cannot be done from a `.cnv` alone. Process casts first (Sea-Bird software or [HakaiInstitute/seabird-processing](https://github.com/HakaiInstitute/seabird-processing)), then plot here.
+- Colab-only for now; a local Jupyter version would replace `google.colab.files.upload()` with a file picker.
+- No station map or T-S diagram yet; both are natural additions given the locked station colours.
+- Spline line shape is cosmetic; switch `LINE_SHAPE = "linear"` in Setup to see the raw 1 db bins.
 
-## What you get
+## Author
 
-Written to `/content/CTD_output/`:
+James Simpson — https://github.com/jimothy-dev
 
-- **`CTD_profiles.html`** — all graphs together, interactive, ~30 KB. Hover for values, zoom, click the legend to hide a station.
-- **`single_graphs/*.html`** — one file per variable (`Temperature.html`, `Salinity.html`, …), ~10 KB each, no page heading so they drop cleanly into someone else's layout.
-- **`png/*.png`** — 3× scale static copies for slides and print.
-- **`CTD_profiles_offline.html`** — everything inlined, several MB, works with no internet. For presenting without wifi.
-
-## Sharing a graph
-
-**For a document or slideshow — use the PNG.** Google Docs, Word, Google Slides and PowerPoint cannot display an interactive chart, and no add-on changes that.
-
-**To let someone explore it — send them the HTML file.** They double-click it and it opens in their browser with everything working, nothing to install. Use `single_graphs/Temperature.html` if you want just the one graph rather than all of them.
-
-For a chart embedded in a web page, hand the HTML file to whoever manages the site and ask for an iframe.
-
-## Other instruments
-
-Columns and the data offset are read from each file's own header, so header length and sensor layout never have to be configured. Checked against thirteen `.cnv` files from public archives — different ships, instruments and decades, from 3 rows to 176,000 — all of which parsed and plotted.
-
-Recognised channels are graphed automatically; anything else in a file is offered as a tick box, so nothing is out of reach.
-
-## Raw casts
-
-A cast that has not been processed still contains the upcast, so the profile doubles back on itself. With **downcast_only_raw** ticked, the Load cell keeps the downcast only. Files that were already processed are left alone.
-
-**That is a display fix, not processing.** It makes the shape readable; it does not correct the values. Sea-Bird's software does several correction steps before salinity is calculated, and this notebook does none of them — it cannot, from a `.cnv` alone. The Load cell says so when a file looks uncorrected.
-
-If the numbers matter, process the casts properly first — with Sea-Bird's own software or [HakaiInstitute/seabird-processing](https://github.com/HakaiInstitute/seabird-processing) — then plot the results here.
-
-## Credit
-
-Example data in `example_data/` collected by students of **TGEOS 445, Estuarine Field Studies, University of Washington Tacoma**, Spring 2026, in Colvos Passage and East Passage, Puget Sound.
-
-Instrument: **Sea-Bird SBE 19plus** (temperature and conductivity SN 7686), processed with Sea-Bird SBEDataProcessing.
-
-## Licence
-
-[GPL-3.0](LICENSE). Copyright (c) 2026 James Simpson. Covers the code; example data stays with its authors.
+Licence: [GPL-3.0](LICENSE). Example data remains with its authors.
