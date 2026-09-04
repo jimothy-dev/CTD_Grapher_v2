@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "CTD Grapher v2 (Colab notebook)"
+type: software
+authors:
+  - family-names: Simpson
+    given-names: James
+repository-code: "https://github.com/jimothy-dev/CTD_Grapher_v2"
+abstract: "Colab notebook that turns Sea-Bird .cnv CTD casts into interactive depth profiles, a station map and transect sections."
+license: GPL-3.0
+version: "2.0.0"
+date-released: "2026-09-04"
+keywords:
+  - CTD
+  - oceanography
+  - Sea-Bird
+  - Colab
