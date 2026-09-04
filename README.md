@@ -4,6 +4,8 @@ Colab notebook that turns Sea-Bird `.cnv` CTD casts into interactive multi-stati
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/jimothy-dev/CTD_Grapher_v2/blob/main/CTD_Grapher_v2.ipynb)
 
+**Web app version** (no Colab needed, same graphs plus a transect tool): https://jimothy-dev.github.io/CTD_Grapher_Web/ — source at [CTD_Grapher_Web](https://github.com/jimothy-dev/CTD_Grapher_Web).
+
 **Live example:** https://jimothy-dev.github.io/CTD_Grapher_v2/examples/Temperature.html — five casts from Colvos Passage and East Passage, Puget Sound. Hover for values, zoom, click a station in the legend to hide it.
 
 This replaces [CTD_Grapher](https://github.com/jimothy-dev/CTD_Grapher) (v1), which needed a manual Excel import and hard-coded column positions for two specific instruments.
