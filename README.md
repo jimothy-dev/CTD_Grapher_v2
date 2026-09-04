@@ -31,7 +31,7 @@ This replaces [CTD_Grapher](https://github.com/jimothy-dev/CTD_Grapher) (v1), wh
 2. Run **Setup** (installs `kaleido==0.2.1`; `plotly`, `pandas`, `numpy`, `ipywidgets` are preinstalled in Colab).
 3. Run **1 · Survey location and files** — type the survey area, pick the `.cnv` files, tick the variables to graph. Leave `downcast_only_raw` ticked unless the files are already processed.
 4. Run **2 · Draw the graphs**. Change `depth_from_m` / `depth_to_m` and re-run this cell alone to zoom the water column without re-uploading.
-5. For a station map and a transect, run **3 · Station positions and transect** (positions, then tick and drag the stations into order along the line) and **4 · Station map and water column transect**. Not needed for the graphs alone.
+5. For a station map and a transect, run **3 · Station positions and transect** (positions, then tick and drag the stations into order along the line, adding any seafloor depths known between them) and **4 · Station map and water column transect**. Not needed for the graphs alone.
 6. Download from the folder icon in the sidebar: `/content/CTD_output/`.
 
 To try it without your own data, upload `example_data/Station_11.cnv` ... `Station_17.cnv`.
@@ -45,7 +45,6 @@ To try it without your own data, upload `example_data/Station_11.cnv` ... `Stati
 
 - No sensor corrections: alignment, cell thermal mass, loop edit and derived salinity are Sea-Bird processing steps that cannot be done from a `.cnv` alone. Process casts first (Sea-Bird software or [HakaiInstitute/seabird-processing](https://github.com/HakaiInstitute/seabird-processing)), then plot here.
 - Colab-only for now; a local Jupyter version would replace `google.colab.files.upload()` with a file picker.
-- No station map or T-S diagram yet; both are natural additions given the locked station colours.
 - Spline line shape is cosmetic; switch `LINE_SHAPE = "linear"` in Setup to see the raw 1 db bins.
 
 ## Author
